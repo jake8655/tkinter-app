@@ -1,3 +1,0 @@
-IDEA:
-- trash collecting
-- move with arrow keys cuz fck tkinter
