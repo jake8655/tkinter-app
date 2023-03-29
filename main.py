@@ -8,10 +8,12 @@ canvas.pack()
 
 player = canvas.create_oval(WIDTH//2 - 50, HEIGHT//2 - 50, WIDTH//2 + 50, HEIGHT//2 + 50, fill='lightblue', outline='blue')
 
-def motion(coords):
-    canvas.place(x=10, y=10)
+def motion(event):
+    print(event["x"], event["y"])
+    canvas.move(player, event["x"], event["y"])
 
-# Arrow movements
-# canvas.bind('<>', motion)
+# Mouse movements
+motion({'x': 100, 'y': 100})
+# canvas.bind('<Motion>', motion)
 
 tkinter.mainloop()
