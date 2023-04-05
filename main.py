@@ -7,6 +7,10 @@ PLAYER_HEIGHT = 50
 
 canvas = tkinter.Canvas(bg='pink', width=WIDTH, height=HEIGHT)
 canvas.pack()
+# Face
+canvas.create_oval(WIDTH//2 - PLAYER_WIDTH, HEIGHT//2 - PLAYER_HEIGHT, WIDTH//2 + PLAYER_WIDTH, HEIGHT//2 + PLAYER_HEIGHT, fill='lightblue', outline='blue', tag='player')
+# Eyes
+canvas.create_oval(WIDTH//2 - (PLAYER_WIDTH//2 - 10), HEIGHT//2 - (PLAYER_HEIGHT//2 + 5), WIDTH//2 + (PLAYER_WIDTH//2 - 5), HEIGHT//2 + (PLAYER_HEIGHT//2 - 5), fill='black', tag='player')
 
 def getDistanceBetweenCoords(coords1: tuple[float, float], coords2: tuple[float, float]):
     return coords1[0] - coords2[0], coords1[1] - coords2[1]
@@ -16,13 +20,10 @@ def move(tag: str, coords: tuple[float, float]):
     target_coords = getDistanceBetweenCoords(coords, tmp_coords)
     canvas.move(tag, *target_coords)
 
-canvas.create_oval(WIDTH//2 - PLAYER_WIDTH, HEIGHT//2 - PLAYER_WIDTH, WIDTH//2 + PLAYER_HEIGHT, HEIGHT//2 + PLAYER_HEIGHT, fill='lightblue', outline='blue', tag='player')
-
 def motion(event):
     move('player', (event.x-PLAYER_WIDTH, event.y-PLAYER_HEIGHT))
 
-# Mouse movements
-# motion({'x': 100, 'y': 100})
+# Move player to mouse pos
 canvas.bind('<Motion>', motion)
 
 tkinter.mainloop()
