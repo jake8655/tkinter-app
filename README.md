@@ -1,5 +1,7 @@
 # Tkinter-App
 Random tkinter school project
+## Very much a lot better idea
+- Tic Tac Toe
 ## A lot better Idea
 - Impossible game
 - map = maze

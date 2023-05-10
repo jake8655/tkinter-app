@@ -1,20 +1,19 @@
-import tkinter
-from utils import move
+import tkinter as tk
 
 WIDTH = 800
 HEIGHT = 600
-PLAYER_WIDTH = 50
-PLAYER_HEIGHT = 50
 
-canvas = tkinter.Canvas(bg='pink', width=WIDTH, height=HEIGHT)
+canvas = tk.Canvas(bg='pink', width=WIDTH, height=HEIGHT)
 canvas.pack()
-img = tkinter.PhotoImage(file="assets/player.png")
-canvas.create_image(WIDTH//2,HEIGHT//2, anchor='center', image=img, tag='player')
 
-def motion(event):
-    move('player', (event.x, event.y))
+def draw_play_area():
+    width = 200
+    height = 150
+    for i in range(2):
+        canvas.create_line(100, 200+i*height, 100+3*width, 200+i*height, fill="black", width=1)
+    for i in range(2):
+        canvas.create_line(100+i*width, 50+height, 100+i*width, 50+height, fill="black", width=1)
 
-# Move player to mouse pos
-canvas.bind('<Motion>', motion)
+draw_play_area()
 
-tkinter.mainloop()
+tk.mainloop()
