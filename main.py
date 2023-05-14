@@ -1,7 +1,7 @@
 from os import error
 import tkinter as tk
-from typing import Literal, Union
-import random
+from typing import Union
+import minimax
 
 WIDTH = 800
 HEIGHT = 600
@@ -13,7 +13,7 @@ win.title("Tic Tac Toe")
 canvas = tk.Canvas(bg="pink", width=WIDTH, height=HEIGHT)
 canvas.pack()
 
-game_state: list[list[Literal[None, "X", "O"]]] = [[None, None, None], [None, None, None], [None, None, None]]
+game_state: minimax.Board = [[None, None, None], [None, None, None], [None, None, None]]
 
 
 def draw_play_area(width: int, height: int):
@@ -26,6 +26,7 @@ def draw_play_area(width: int, height: int):
 
 width_of_square = 200
 height_of_square = 150
+# Very glad I had not had to write these myself, but probably should change to generated
 coords_of_squares = (
     (
         ((100, 50), (100 + width_of_square, 50 + height_of_square)),
@@ -48,7 +49,7 @@ coords_of_squares = (
 )
 
 
-def draw_x(square: tuple[int, int]):
+def draw_x(square: minimax.Square):
     canvas.create_line(
         coords_of_squares[square[0]][square[1]][0][0] + 20,
         coords_of_squares[square[0]][square[1]][0][1] + 20,
@@ -101,9 +102,8 @@ def draw_o():
         print("Draw")
         return canvas.after(1000, win.destroy)
 
-    square = random.randint(0, 2), random.randint(0, 2)
-    while game_state[square[0]][square[1]] is not None:
-        square = random.randint(0, 2), random.randint(0, 2)
+    square = minimax.find_best_move(game_state)
+    print(game_state)
 
     canvas.create_oval(
         coords_of_squares[square[0]][square[1]][0][0] + 20,
@@ -119,8 +119,8 @@ def draw_o():
     check_win()
 
 
-def calculate_square(x: int, y: int) -> tuple[int, int]:
-    square: Union[None, tuple[int, int]] = None
+def calculate_clicked_square(x: int, y: int) -> minimax.Square:
+    square: Union[None, minimax.Square] = None
     for i in range(3):
         for j in range(3):
             if (
@@ -136,12 +136,12 @@ def calculate_square(x: int, y: int) -> tuple[int, int]:
     return square
 
 
-def check_square_is_taken(square: tuple[int, int]) -> bool:
+def check_square_is_taken(square: minimax.Square) -> bool:
     return game_state[square[0]][square[1]] is not None
 
 
 def click(e):
-    square = calculate_square(e.x, e.y)
+    square = calculate_clicked_square(e.x, e.y)
 
     if check_square_is_taken(square):
         return print("Square already taken")
