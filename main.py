@@ -103,7 +103,6 @@ def handle_win(winner):
 
 def make_ai_move():
     square = minimax.find_best_move(game_state)
-    print(game_state)
 
     if minimax.AI == "X":
         draw_x(square, "red")
@@ -158,6 +157,8 @@ def after_wait():
 draw_play_area(width_of_square, height_of_square)
 if minimax.AI == "X":
     canvas.after(1000, after_wait)
+else:
+    canvas.bind("<Button-1>", click)
 
 # Quit when ESC is pressed
 win.bind("<Escape>", lambda _: win.destroy())
